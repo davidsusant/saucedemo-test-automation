@@ -14,6 +14,13 @@ public class Hooks {
     public void setUp(Scenario scenario) {
         System.out.println("Starting scenario: " + scenario.getName());
         DriverManager.setDriver(ConfigReader.getBrowser());
+
+        // Pause for 5 seconds for debugging
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @After
