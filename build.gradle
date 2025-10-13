@@ -1,17 +1,22 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.11.2'
 }
 
 group 'com.saucedemo.test.automation'
 version '1.0-SNAPSHOT'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
 repositories {
     mavenCentral()
+}
+
+ext {
+    allureVersion = '2.24.0'
+    aspectJVersion = '1.9.20'
+}
+
+configurations {
+    agent
 }
 
 dependencies {
@@ -22,17 +27,60 @@ dependencies {
     implementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
     implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
     implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+
+    // Allure dependencies
+    implementation "io.qameta.allure:allure-testng:${allureVersion}"
+    implementation "io.qameta.allure:allure-cucumber7-jvm:${allureVersion}"
+    implementation "io.qameta.allure:allure-attachments:${allureVersion}"
+    agent "org.aspectj:aspectjweaver:${aspectJVersion}"
+}
+
+allure {
+    version = allureVersion
+    adapter {
+        frameworks {
+            cucumber {
+                adapterVersion = allureVersion
+            }
+        }
+    }
 }
 
 test {
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "StandardError"
+        showStandardStreams = true
+    }
+
+    // AspectJ Weaver for Allure
+    doFirst {
+        jvmArgs "-javaagent:${configurations.agent.singleFile}"
+    }
+
     systemProperty 'cucumber.filter.tags', System.getProperty('cucumber.filters.tags', '')
+
+    // Clean allure results and report before running tests
+    doFirst {
+        delete file('allure-results')
+        delete file('allure-report')
+    }
 }
 
 task runTests(type: Test) {
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
+
+    doFirst {
+        jvmArgs "-javaagent:${configurations.agent.singleFile}"
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
