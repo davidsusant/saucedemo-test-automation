@@ -56,12 +56,14 @@ test {
         showStandardStreams = true
     }
 
+    systemProperty 'allure.results.directory', 'allure-results'
+
     // AspectJ Weaver for Allure
     doFirst {
         jvmArgs "-javaagent:${configurations.agent.singleFile}"
     }
 
-    systemProperty 'cucumber.filter.tags', System.getProperty('cucumber.filters.tags', '')
+    systemProperty 'cucumber.filter.tags', System.getProperty('cucumber.filter.tags', '')
 
     // Clean allure results and report before running tests
     doFirst {
