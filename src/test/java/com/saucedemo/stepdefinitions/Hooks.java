@@ -1,8 +1,10 @@
 package com.saucedemo.stepdefinitions;
 
+import com.saucedemo.utils.AllureEnvironmentWriter;
 import com.saucedemo.utils.ConfigReader;
 import com.saucedemo.utils.DriverManager;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
@@ -58,5 +60,11 @@ public class Hooks {
         System.out.println("=========================================\n");
 
         DriverManager.quitDriver();
+    }
+
+    @AfterAll
+    public static void writeEnvironmentProperties() {
+        // Generate environment.properties with real-time data
+        AllureEnvironmentWriter.writeEnvironmentProperties();
     }
 }
