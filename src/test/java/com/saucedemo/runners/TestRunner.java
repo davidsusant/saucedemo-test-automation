@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 @CucumberOptions(
     features = "src/test/resources/features",
         glue = {"com.saucedemo.stepdefinitions"},
-        tags = "@smoke or @regression",
         plugin = {
             "pretty",
                 "html:target/cucumber-reports/cucumber.html",
