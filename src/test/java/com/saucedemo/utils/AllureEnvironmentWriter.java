@@ -1,9 +1,6 @@
 package com.saucedemo.utils;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.devtools.v85.input.Input;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.FileWriter;
