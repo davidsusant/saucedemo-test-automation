@@ -1,3 +1,5 @@
+@Epic:Authentication
+@Feature:Login
 Feature: Login Functionality
   As a user of SauceDemo
   I want to be able to login
@@ -6,6 +8,8 @@ Feature: Login Functionality
   Background:
     Given user is on the SauceDemo login page
 
+  @Severity:normal
+  @Story:ValidLogin
   @regression
   Scenario: Login with valid credentials using step by step
     When user enters username "standard_user"

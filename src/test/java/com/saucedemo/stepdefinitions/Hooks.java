@@ -23,14 +23,6 @@ public class Hooks {
         System.out.println("========================================");
 
         DriverManager.setDriver(ConfigReader.getBrowser());
-
-        // Add scenario info to Allure report
-        Allure.epic("SauceDemo E2E Testing");
-        Allure.feature(scenario.getUri().toString().replaceAll(".*/features/", ""));
-
-        // Add environment info to Allure
-        Allure.parameter("Browser", ConfigReader.getBrowser());
-        Allure.parameter("Base URL", ConfigReader.getBaseUrl());
     }
 
     @After
